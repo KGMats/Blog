@@ -1,0 +1,14 @@
+# Hugo build output
+public/
+
+# Hugo lock file
+.hugo_build.lock
+
+# OS junk
+.DS_Store
+
+# Logs
+*.log
+
+# Optional: cache/resources
+resources/_gen/

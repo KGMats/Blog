@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  # ========================
+  # DEVELOPMENT MODE (Hot Reload - no Traefik)
+  # ========================
+  hugo-dev:
+    image: hugomods/hugo:debian-go-non-root-0.160.0
+    container_name: hugo-dev
+    command: hugo server --bind 0.0.0.0 --port 1313 --buildDrafts
+    volumes:
+      - .:/src
+    working_dir: /src
+    ports:
+      - "1313:1313"
+    profiles: ["dev"]
+
+  # ========================
+  # PRODUCTION BUILDER
+  # ========================
+  hugobuilder:
+    image: hugomods/hugo:debian-go-non-root-0.160.0
+    container_name: hugobuilder
+    command: hugo --minify --destination /public --gc
+    volumes:
+      - .:/src
+      - ./public:/public
+    working_dir: /src
+    profiles: ["build"]
+
+  # ========================
+  # PRODUCTION SERVER (nginx + Traefik)
+  # ========================
+  nginx:
+    image: nginx:alpine
+    container_name: hugo-nginx
+    restart: unless-stopped
+    expose:
+      - "80"
+    volumes:
+      - ./public:/usr/share/nginx/html:ro
+    depends_on:
+      - hugobuilder
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.hugo.rule=Host(`blog.kgmats.cc`)"          # ← Change this to your actual domain
+      - "traefik.http.routers.hugo.entrypoints=web"                     # HTTP only (like your speedtest example)
+      # Optional: Add HTTPS version (recommended)
+      # - "traefik.http.routers.hugo-secure.rule=Host(`blog.kgmats.cc`)"
+      # - "traefik.http.routers.hugo-secure.entrypoints=websecure"
+      # - "traefik.http.routers.hugo-secure.tls=true"
+      - "traefik.http.services.hugo.loadbalancer.server.port=80"
+    profiles: ["prod"]
+
+networks:
+  proxy:
+    external: true
