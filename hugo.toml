@@ -34,6 +34,12 @@ style = "github-dark"
   # customSCSS = ["scss/custom.scss"]
   # customJS = ["js/custom.js"]
 
+
+  socialIcons = [
+    { name = "github", url = "https://github.com/KGMats/" },
+    { name = "linkedin", url = "https://linkedin.com/in/your-linkedin-username/" }
+  ]
+
 [taxonomies]
   category = "categories"
   series = "series"
@@ -41,11 +47,11 @@ style = "github-dark"
   author = "authors"
 
 # Social links
-[[params.social]]
-  name = "Github"
-  icon = "fa-brands fa-github fa-2x"
-  weight = 1
-  url = "https://github.com/KGMats/"
+# [[params.social]]
+#   name = "Github"
+#   icon = "fa-brands fa-github fa-2x"
+#   weight = 1
+#   url = "https://github.com/KGMats/"
 # [[params.social]]
 #   name = "Gitlab"
 #   icon = "fa-brands fa-gitlab fa-2x"
