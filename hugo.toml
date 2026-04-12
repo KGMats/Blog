@@ -35,10 +35,15 @@ style = "github-dark"
   # customJS = ["js/custom.js"]
 
 
-  socialIcons = [
-    { name = "github", url = "https://github.com/KGMats/" },
-    { name = "linkedin", url = "https://linkedin.com/in/your-linkedin-username/" }
-  ]
+[[params.socialIcons]]
+    name = "github"
+    url = "https://github.com/KGMats/"
+
+[[params.socialIcons]]
+    name = "linkedin"
+    url = "https://linkedin.com/in/kgmats/"
+
+
 
 [taxonomies]
   category = "categories"
